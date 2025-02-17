@@ -1,4 +1,4 @@
-# parking-app
+# Parking App
 
 **Version:** 1.0  
 **Date:** Feb 17th 2025  
@@ -194,7 +194,7 @@ The backend comprises multiple microservices, exposed via a central API Gateway,
 
 ## Diagrams
 
-Below are the diagrams generated using Mermaid. Copy these code blocks into a Mermaid-enabled environment.
+Below are the diagrams generated using Mermaid.
 
 ### Infrastructure Diagram
 
