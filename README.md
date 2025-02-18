@@ -21,7 +21,7 @@
 
 ## Introduction
 
-This document presents the technical analysis, design, and deployment strategy for both the frontend and backend APIs of the Municipal Parking Management Application. It includes detailed reports on technology choices, development practices, hosting strategies, integration with external systems, and high availability & resilience measures. The document is intended for CTOs, developers, cloud engineers, platform engineers, and infrastructure engineers.
+This document presents the technical analysis, design, and deployment strategy for both the frontend and backend APIs of the Municipal Parking Management Application. It includes detailed reports on technology choices, development practices, hosting strategies, integration with external systems, and high availability & resilience measures.
 
 ---
 
