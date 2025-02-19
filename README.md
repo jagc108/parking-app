@@ -266,7 +266,7 @@ lambda3:B --> T:iam
 iam:R -- L:db
 db:R -- L:eks
 ```
-[Infrastructure Diagram](infra_diagram.png)
+![Infrastructure Diagram](infra_diagram.png)
 
 ### API and Frontend Flow Diagram
 
