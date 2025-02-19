@@ -228,7 +228,6 @@ junction junctionRight
 %% Conexiones
 
 %% UI --> CloudFront --> S3 --> API
-%% ui:B --> T:cdn{group}
 android:R -- L:chrome
 chrome{group}:B --> T:cdn{group}
 cdn:R --> L:s3
@@ -450,3 +449,4 @@ erDiagram
 ```
 ## Conclusion
 The combined technical approach detailed in this report provides a comprehensive blueprint for the development, deployment, and operation of both the frontend and backend APIs of the Municipal Parking Management Application. By leveraging modern frameworks, robust CI/CD pipelines, container orchestration, and a strong security posture, the solution is designed to be scalable, highly available, and resilient to future growth and integration needs.
+
