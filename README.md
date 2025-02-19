@@ -199,127 +199,73 @@ Below are the diagrams generated using Mermaid.
 ### Infrastructure Diagram
 
 ```mermaid
-flowchart TD
-    %% User Interfaces
-    subgraph UI["User Interfaces"]
-      A1[Driver: Check balance, start session, pay fines]
-      A2[Point of Sale: Recharge balance, start session, issue receipts]
-      A3[Traffic Officer: Verify active sessions, issue fines]
-      A4[Municipality: Manage users, configure rates, monitor operations]
-    end
+architecture-beta
 
-    %% Frontend
-    subgraph Frontend["Frontend"]
-      B1[Web Application: Administrative dashboard, reports]
-      B2[Mobile Application: Interface for Driver, Officer, and Point of Sale]
-      B3[Public Portal: General information, support]
-    end
+group ui[UI]
+group awsApp(logos:aws)[Parking App]
+group frontend[Frontend] in awsApp
+group backend[Backend] in awsApp
 
-    %% Frontend Hosting
-    subgraph Hosting_Frontend["Frontend Hosting"]
-      FHOST[Object Storage & CDN: Hosts and distributes Frontend code]
-    end
+service android(logos:android-icon)[android] in ui
+service chrome(logos:chrome)[chrome] in ui
+service api(logos:aws-api-gateway)[API Gateway] in backend
+service lambda1(logos:aws-lambda)[Parking Session Mgmt] in backend
+service lambda2(logos:aws-lambda)[Notifications] in backend
+service lambda3(logos:aws-lambda)[Users Mgmt] in backend
+service lambda4(logos:aws-lambda)[Audit] in backend
+service lambda5(logos:aws-lambda)[Payments] in backend
+service s3(logos:aws-s3)[S3 Bucket] in frontend
+service cdn(logos:aws-cloudfront)[CloudFront Distribution] in frontend
+service db(logos:aws-rds)[DB] in awsApp
+service iam(logos:aws-iam)[IAM] in awsApp
+service eks(logos:aws-eks)[EKS] in awsApp
 
-    %% Connection from User Interfaces to Frontend
-    A1 ---|Uses| B2
-    A2 ---|Uses| B2
-    A3 ---|Uses| B2
-    A4 ---|Uses| B1
+junction junctionCenter
+junction junctionLeft
+junction junctionRight
 
-    %% Frontend served by CDN
-    B1 ---|Served by| FHOST
-    B2 ---|Served by| FHOST
-    B3 ---|Served by| FHOST
 
-    %% API Gateway
-    subgraph API_GW["API Gateway"]
-      C1[API Gateway: Routing and authentication]
-    end
+%% Conexiones
 
-    %% Backend Microservices
-    subgraph Backend["Backend Microservices"]
-      D1[Parking Session Management: Controls sessions and durations]
-      D2[Payments: Transactions, recharges, and fines]
-      D3[Notifications: Alerts and reminders]
-      D4[User and Role Management: Authentication and authorization]
-      D5[Audit and Logging: Event logging]
-    end
+%% UI --> CloudFront --> S3 --> API
+%% ui:B --> T:cdn{group}
+android:R -- L:chrome
+chrome{group}:B --> T:cdn{group}
+cdn:R --> L:s3
+cdn{group}:B --> T:api{group}
 
-    %% Database
-    subgraph DB["Database"]
-      E1[Relational Database: Users, transactions, sessions]
-      E2[Cache - Redis: Sessions and tokens]
-    end
+%% Forzar la alineación horizontal de los Lambdas
+lambda1:R -- L:lambda2
+lambda2:R -- L:lambda3
+lambda3:R -- L:lambda4
+lambda4:R -- L:lambda5
 
-    %% Identity and Access Management (IAM)
-    subgraph IAM["Identity Management"]
-      F1[IAM - Keycloak / Auth0: Authentication, OAuth2, MFA]
-    end
+%% API --> Lambdas
+api:B --> T:lambda1
+api:B --> T:lambda2
+api:B --> T:lambda3
+api:B --> T:lambda4
+api:B --> T:lambda5
 
-    %% Cloud Infrastructure
-    subgraph Infra["Cloud Infrastructure"]
-      G1[Kubernetes Cluster: Container orchestration]
-      G2[Serverless Functions: Automatic scaling]
-      G3[Object Storage & CDN: Hosts Frontend and delivers files]
-      G4[Load Balancer: Traffic distribution]
-      G5[VPC & Subnets: Isolation and security]
-    end
+%% Lambdas --> DB, IAM, EKS
+lambda1:B --> T:db
+lambda2:B --> T:db
+lambda3:B --> T:db
+lambda4:B --> T:db
+lambda5:B --> T:db
 
-    %% External Integrations
-    subgraph Externals["External Systems"]
-      H1[Payment System - MercadoPago: Processes recharges and fines]
-      H2[Billing Services: Invoice issuance]
-    end
+lambda1:B --> T:eks
+lambda2:B --> T:eks
+lambda3:B --> T:eks
+lambda4:B --> T:eks
+lambda5:B --> T:eks
 
-    %% Relationships
+%% lambda1:B --> T:iam
+%% lambda2:B --> T:iam
+lambda3:B --> T:iam
 
-    %% Frontend to API Gateway
-    B1 ---|REST Requests| C1
-    B2 ---|REST Requests| C1
-    B3 ---|REST Requests| C1
-
-    %% API Gateway to Backend
-    C1 ---|Routes to| D1
-    C1 ---|Routes to| D2
-    C1 ---|Routes to| D3
-    C1 ---|Routes to| D4
-    C1 ---|Routes to| D5
-
-    %% Backend to Database
-    D1 ---|Query/Update| E1
-    D2 ---|Records transactions| E1
-    D4 ---|Manages users| E1
-    D5 ---|Logs events| E1
-
-    D1 ---|Uses Cache| E2
-    D4 ---|Uses Cache| E2
-
-    %% API Gateway authentication validation
-    C1 ---|Validates auth| F1
-    D4 ---|Checks roles| F1
-
-    %% Backend to External Integrations
-    D2 ---|Sends transactions| H1
-    D2 ---|Sends data| H2
-
-    %% Deployment on Cloud Infrastructure
-    D1 --- G1
-    D2 --- G1
-    D3 --- G1
-    D4 --- G1
-    D5 --- G1
-    E1 --- G1
-    E2 --- G1
-
-    %% API Gateway and Frontend using Load Balancer and VPC
-    C1 --- G4
-    B1 --- G4
-    B2 --- G4
-    B3 --- G4
-    G4 --- G5
-
-    %% Frontend and file storage
-    FHOST ---|Hosts code| G3
+iam:R -- L:db
+db:R -- L:eks
 ```
 
 ### API and Frontend Flow Diagram
