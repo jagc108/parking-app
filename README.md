@@ -1,20 +1,14 @@
 # Parking App
 
-**Version:** 1.0  
-**Date:** Feb 17th 2025  
-**Prepared by:** Johand Garcia
-
----
-
 ## Table of Contents
 
 1. [Introduction](#introduction)
 2. [Frontend Development and Deployment Report](#frontend-development-and-deployment-report)
 3. [Backend API Development and Deployment Report](#backend-api-development-and-deployment-report)
 4. [Diagrams](#diagrams)
-   - [Infrastructure Diagram (English)](#infrastructure-diagram)
-   - [ER Diagram for the Database (English)](#er-diagram-for-the-database)
-   - [API and Frontend Flow Diagram (English)](#api-and-frontend-flow-diagram)
+   - [Infrastructure Diagram](#infrastructure-diagram)
+   - [ER Diagram for the Database](#er-diagram-for-the-database)
+   - [API and Frontend Flow Diagram](#api-and-frontend-flow-diagram)
 5. [Conclusion](#conclusion)
 
 ---
@@ -25,7 +19,7 @@ This document presents the technical analysis, design, and deployment strategy f
 
 ---
 
-## Frontend Development and Deployment Report
+## Frontend Development and Deployment
 
 ### 1. Overview
 
@@ -89,7 +83,7 @@ The frontend of the application is developed for both web and mobile platforms t
 
 ---
 
-## Backend API Development and Deployment Report
+## Backend API Development and Deployment
 
 ### 1. Overview
 
@@ -449,5 +443,5 @@ erDiagram
     USER ||--o{ AUDIT_LOG : "records"
 ```
 ## Conclusion
-The combined technical approach detailed in this report provides a comprehensive blueprint for the development, deployment, and operation of both the frontend and backend APIs of the Municipal Parking Management Application. By leveraging modern frameworks, robust CI/CD pipelines, container orchestration, and a strong security posture, the solution is designed to be scalable, highly available, and resilient to future growth and integration needs.
+The combined technical approach detailed in this repository provides a comprehensive blueprint for the development, deployment, and operation of both the frontend and backend APIs of the Municipal Parking Management Application. By leveraging modern frameworks, robust CI/CD pipelines, container orchestration, and a strong security posture, the solution is designed to be scalable, highly available, and resilient to future growth and integration needs.
 
